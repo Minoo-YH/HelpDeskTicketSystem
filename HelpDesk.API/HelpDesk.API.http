@@ -1,6 +1,6 @@
-@HelpDesk.API_HostAddress = http://localhost:5151
+@TestApi_HostAddress = http://localhost:5291
 
-GET {{HelpDesk.API_HostAddress}}/weatherforecast/
+GET {{TestApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
