@@ -1,9 +1,9 @@
 using HelpDesk.API.Data;
 using HelpDesk.API.DTOs;
 using HelpDesk.API.Models;
+using HelpDesk.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+
 namespace HelpDesk.API.Controllers;
 
 [ApiController]
@@ -11,10 +11,14 @@ namespace HelpDesk.API.Controllers;
 public class UsersController : ControllerBase
 {
   private readonly ApplicationDbContext _context;
+  private readonly JwtService _jwtService;
 
-  public UsersController(ApplicationDbContext context)
+  public UsersController(
+      ApplicationDbContext context,
+      JwtService jwtService)
   {
     _context = context;
+    _jwtService = jwtService;
   }
 
   [HttpPost]
@@ -34,6 +38,7 @@ public class UsersController : ControllerBase
 
     return Ok("User registered successfully.");
   }
+
   [HttpPost("login")]
   public IActionResult Login(LoginRequest request)
   {
@@ -53,6 +58,8 @@ public class UsersController : ControllerBase
       return Unauthorized("Invalid email or password.");
     }
 
-    return Ok("Login successful.");
+    var token = _jwtService.GenerateToken(user);
+
+    return Ok(token);
   }
 }
