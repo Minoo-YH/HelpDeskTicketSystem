@@ -16,21 +16,21 @@ public class UsersController : ControllerBase
         _context = context;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Register(RegisterRequest request)
+  [HttpPost]
+public async Task<IActionResult> Register(RegisterRequest request)
+{
+    var user = new User
     {
-        var user = new User
-        {
-            FullName = request.FullName,
-            Email = request.Email,
-            PasswordHash = request.Password,
-            CreatedAt = DateTime.UtcNow
-        };
+        FullName = request.FullName,
+        Email = request.Email,
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+        CreatedAt = DateTime.UtcNow
+    };
 
-        _context.Users.Add(user);
+    _context.Users.Add(user);
 
-        await _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
 
-        return Ok("User registered successfully.");
-    }
+    return Ok("User registered successfully.");
+}
 }
