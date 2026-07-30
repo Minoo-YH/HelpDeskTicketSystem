@@ -2,6 +2,7 @@ using HelpDesk.API.Data;
 using HelpDesk.API.DTOs;
 using HelpDesk.API.Models;
 using HelpDesk.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpDesk.API.Controllers;
@@ -33,7 +34,6 @@ public class UsersController : ControllerBase
     };
 
     _context.Users.Add(user);
-
     await _context.SaveChangesAsync();
 
     return Ok("User registered successfully.");
@@ -61,5 +61,15 @@ public class UsersController : ControllerBase
     var token = _jwtService.GenerateToken(user);
 
     return Ok(token);
+  }
+
+  [Authorize]
+  [HttpGet("profile")]
+  public IActionResult GetProfile()
+  {
+    return Ok(new
+    {
+      Message = "You are authenticated!"
+    });
   }
 }
