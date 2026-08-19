@@ -179,5 +179,27 @@ public class TicketsController : ControllerBase
 
     return Ok(ticketDto);
   }
+  [HttpGet("admin/all")]
+  [Authorize(Roles = "Admin")]
+  public async Task<ActionResult<IEnumerable<TicketDto>>> GetAllTicketsForAdmin()
+  {
+    var tickets = await _context.Tickets
+        .OrderByDescending(t => t.CreatedAt)
+        .Select(t => new TicketDto
+        {
+          Id = t.Id,
+          Title = t.Title,
+          Description = t.Description,
+          Status = t.Status,
+          Priority = t.Priority,
+          CreatedAt = t.CreatedAt,
+          UpdatedAt = t.UpdatedAt,
+          ClosedAt = t.ClosedAt,
+          UserId = t.UserId
+        })
+        .ToListAsync();
+
+    return Ok(tickets);
+  }
 
 }

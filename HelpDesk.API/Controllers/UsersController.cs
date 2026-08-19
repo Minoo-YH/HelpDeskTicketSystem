@@ -30,6 +30,7 @@ public class UsersController : ControllerBase
       FullName = request.FullName,
       Email = request.Email,
       PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+      Role = "User",
       CreatedAt = DateTime.UtcNow
     };
 
@@ -72,4 +73,5 @@ public class UsersController : ControllerBase
       Message = "You are authenticated!"
     });
   }
+  
 }
