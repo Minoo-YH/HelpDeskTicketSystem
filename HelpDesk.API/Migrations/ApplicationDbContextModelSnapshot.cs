@@ -62,7 +62,7 @@ namespace HelpDesk.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("HelpDesk.API.Models.User", b =>
@@ -94,7 +94,7 @@ namespace HelpDesk.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("HelpDesk.API.Models.Ticket", b =>
