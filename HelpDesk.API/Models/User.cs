@@ -14,5 +14,9 @@ public class User
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public ICollection<Ticket> Tickets { get; set; }
+        = new List<Ticket>();
+
+    public ICollection<TicketComment> Comments { get; set; }
+        = new List<TicketComment>();
 }
