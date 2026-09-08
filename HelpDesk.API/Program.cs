@@ -1,6 +1,7 @@
 using HelpDesk.API.Data;
 using HelpDesk.API.Models;
 using HelpDesk.API.Services;
+using HelpDesk.API.Services.AI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddScoped<GeminiService>();
 
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
