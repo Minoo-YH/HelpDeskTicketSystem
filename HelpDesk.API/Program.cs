@@ -47,6 +47,8 @@ builder.Configuration.GetSection("Gemini"));
 
 // Register Services
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<GeminiService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
