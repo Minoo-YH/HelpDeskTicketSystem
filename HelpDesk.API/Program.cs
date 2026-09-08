@@ -42,6 +42,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.Configure<GeminiSettings>(
+builder.Configuration.GetSection("Gemini"));
+
 // Register Services
 builder.Services.AddScoped<JwtService>();
 
