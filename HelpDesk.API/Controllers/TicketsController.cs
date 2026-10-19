@@ -5,6 +5,8 @@ using HelpDesk.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HelpDesk.API.Services.AI;
+using System.Text.Json;
 
 namespace HelpDesk.API.Controllers;
 
@@ -14,11 +16,16 @@ namespace HelpDesk.API.Controllers;
 public class TicketsController : ControllerBase
 {
   private readonly ApplicationDbContext _context;
+  private readonly GeminiService _geminiService;
 
-  public TicketsController(ApplicationDbContext context)
+  public TicketsController(
+      ApplicationDbContext context,
+      GeminiService geminiService)
   {
     _context = context;
+    _geminiService = geminiService;
   }
+
 
   [HttpPost]
   public async Task<ActionResult<TicketDto>> CreateTicket(CreateTicketDto dto)
@@ -40,6 +47,30 @@ public class TicketsController : ControllerBase
       CreatedAt = DateTime.UtcNow,
       UserId = userId
     };
+
+    try
+    {
+      var aiJson = await _geminiService.AnalyzeTicketAsync(
+          $"{ticket.Title}\n{ticket.Description}");
+
+      var aiResult = JsonSerializer.Deserialize<GeminiResponse>(
+          aiJson,
+          new JsonSerializerOptions
+          {
+            PropertyNameCaseInsensitive = true
+          });
+
+      if (aiResult != null)
+      {
+        ticket.AiCategory = aiResult.Category;
+        ticket.AiPriority = aiResult.Priority;
+        ticket.AiSuggestedResponse = aiResult.SuggestedResponse;
+      }
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"Gemini analysis failed: {ex.Message}");
+    }
 
     _context.Tickets.Add(ticket);
     await _context.SaveChangesAsync();
