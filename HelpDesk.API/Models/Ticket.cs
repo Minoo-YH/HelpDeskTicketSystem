@@ -12,7 +12,15 @@ public class Ticket
 
     public string Priority { get; set; } = "Medium";
 
+    public string? AiCategory { get; set; }
+
+    public string? AiPriority { get; set; }
+
+    public string? AiSuggestedResponse { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    
 
     public DateTime? UpdatedAt { get; set; }
 

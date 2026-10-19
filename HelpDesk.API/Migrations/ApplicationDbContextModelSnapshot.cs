@@ -30,6 +30,15 @@ namespace HelpDesk.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AiCategory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AiPriority")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AiSuggestedResponse")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("datetime2");
 
