@@ -85,7 +85,10 @@ public class TicketsController : ControllerBase
       CreatedAt = ticket.CreatedAt,
       UpdatedAt = ticket.UpdatedAt,
       ClosedAt = ticket.ClosedAt,
-      UserId = ticket.UserId
+      UserId = ticket.UserId,
+      AiCategory = ticket.AiCategory,
+      AiPriority = ticket.AiPriority,
+      AiSuggestedResponse = ticket.AiSuggestedResponse
     };
 
     return CreatedAtAction(
@@ -119,7 +122,10 @@ public class TicketsController : ControllerBase
           CreatedAt = t.CreatedAt,
           UpdatedAt = t.UpdatedAt,
           ClosedAt = t.ClosedAt,
-          UserId = t.UserId
+          UserId = t.UserId,
+          AiCategory = t.AiCategory,
+          AiPriority = t.AiPriority,
+          AiSuggestedResponse = t.AiSuggestedResponse
         })
         .ToListAsync();
 
@@ -226,7 +232,10 @@ public class TicketsController : ControllerBase
           CreatedAt = t.CreatedAt,
           UpdatedAt = t.UpdatedAt,
           ClosedAt = t.ClosedAt,
-          UserId = t.UserId
+          UserId = t.UserId,
+          AiCategory = t.AiCategory,
+          AiPriority = t.AiPriority,
+          AiSuggestedResponse = t.AiSuggestedResponse
         })
         .ToListAsync();
 

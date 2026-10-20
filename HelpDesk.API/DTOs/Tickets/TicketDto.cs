@@ -19,4 +19,8 @@ public class TicketDto
     public DateTime? ClosedAt { get; set; }
 
     public int UserId { get; set; }
+
+    public string? AiCategory { get; set; }
+    public string? AiPriority { get; set; }
+    public string? AiSuggestedResponse { get; set; }
 }
